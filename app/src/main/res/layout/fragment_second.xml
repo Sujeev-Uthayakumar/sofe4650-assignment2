@@ -8,28 +8,61 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_second"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="Latitude (-90 degrees to 90 degrees)"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edit_subtitle_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Longitude (-180 degrees to 180 degrees)"
+            app:layout_constraintTop_toBottomOf="@+id/edit_title_layout">
+
+            <EditText
+                android:id="@+id/edit_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ImageButton
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/previous"
-            app:layout_constraintBottom_toTopOf="@id/textview_second"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="#EADEFF"
+            android:padding="7dp"
+            android:src="@drawable/baseline_delete_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_subtitle_layout" />
 
-        <TextView
-            android:id="@+id/textview_second"
+        <ImageButton
+            android:id="@+id/submitButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/lorem_ipsum"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/rounded_corners"
+            android:backgroundTint="#EADEFF"
+            android:padding="7dp"
+            android:src="@drawable/baseline_check_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/button_second" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_subtitle_layout" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
