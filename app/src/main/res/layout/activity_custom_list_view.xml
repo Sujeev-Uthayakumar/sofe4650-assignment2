@@ -9,7 +9,7 @@
     tools:context=".CustomListView">
 
     <TextView
-        android:id="@+id/list_title"
+        android:id="@+id/list_address"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/list_note"
+        android:id="@+id/list_latitude"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         android:paddingRight="20dp" />
 
     <TextView
-        android:id="@+id/list_subtitle"
+        android:id="@+id/list_longitude"
         android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

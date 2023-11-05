@@ -34,8 +34,8 @@ public class SecondFragment extends Fragment {
         viewModel.getData().observe(getViewLifecycleOwner(), data -> {
             if (data != null) {
                 this.location = data;
-                binding.editTitle.setText(data.getLatitude());
-                binding.editSubtitle.setText(data.getLongitude());
+                binding.editLatitude.setText(data.getLatitude());
+                binding.editLongitude.setText(data.getLongitude());
             }
         });
         return binding.getRoot();
@@ -48,18 +48,18 @@ public class SecondFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!areInputsValid(view)) {
-                    String title = binding.editTitle.getText().toString();
-                    String subTitle = binding.editSubtitle.getText().toString();
+                    String latitude = binding.editLatitude.getText().toString();
+                    String longitude = binding.editLongitude.getText().toString();
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
                     if (location != null) {
-                        Location updateNoteModel;
-                        updateNoteModel = new Location(location.getId(), title, subTitle);
-                        dataBaseHelper.updateOne(updateNoteModel);
+                        Location updatedLocationModel;
+                        updatedLocationModel = new Location(location.getId(), latitude, longitude);
+                        dataBaseHelper.updateOne(updatedLocationModel);
                         Toast.makeText(getContext(), "Location Successfully Updated", Toast.LENGTH_SHORT).show();
                     } else {
                         Location location;
                         try {
-                            location = new Location(title, subTitle);
+                            location = new Location(latitude, longitude);
                         } catch (Exception e) {
                             location = new Location(-1, "error", "error", "error");
                         }
@@ -87,24 +87,24 @@ public class SecondFragment extends Fragment {
                             .navigate(R.id.action_SecondFragment_to_FirstFragment);
                     Toast.makeText(getContext(), "Location Successfully Deleted", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Note Cannot be Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Location Cannot be Deleted", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private boolean areInputsValid(View view) {
-        String titleText = binding.editTitle.getText().toString();
-        String subTitleText = binding.editSubtitle.getText().toString();
-        boolean validLatitude = Double.parseDouble(titleText) > 90 || Double.parseDouble(titleText) < -90;
-        boolean validLongitude = Double.parseDouble(subTitleText) > 180 || Double.parseDouble(subTitleText) < -180;
-        return titleText.isEmpty() || subTitleText.isEmpty() || validLatitude || validLongitude;
+        String latitude = binding.editLatitude.getText().toString();
+        String longitude = binding.editLongitude.getText().toString();
+        boolean validLatitude = Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90;
+        boolean validLongitude = Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180;
+        return latitude.isEmpty() || longitude.isEmpty() || validLatitude || validLongitude;
     }
 
     private void styleErrorInputs(View view) {
         // Get the values of inputs
-        String titleText = binding.editTitle.getText().toString();
-        String subTitleText = binding.editSubtitle.getText().toString();
+        String latitude = binding.editLatitude.getText().toString();
+        String longitude = binding.editLongitude.getText().toString();
 
         // Color for input error
         int color = Color.rgb(255,0,0);
@@ -130,24 +130,24 @@ public class SecondFragment extends Fragment {
         ColorStateList myColorList = new ColorStateList(states, colors);
 
         // Check for principal amount input
-        if (titleText.isEmpty()) {
-            binding.editTitleLayout.setError("Required");
-        } else if (subTitleText.isEmpty()) {
-            binding.editSubtitleLayout.setError("Required");
+        if (latitude.isEmpty()) {
+            binding.editLatitudeLayout.setError("Required");
+        } else if (longitude.isEmpty()) {
+            binding.editLongitudeLayout.setError("Required");
         } else {
-            binding.editTitleLayout.setError(null);
+            binding.editLatitudeLayout.setError(null);
         }
 
-        if (Double.parseDouble(titleText) > 90 || Double.parseDouble(titleText) < -90) {
-            binding.editTitleLayout.setError("The value needs to be between -90 degrees and 90 degrees");
+        if (Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90) {
+            binding.editLatitudeLayout.setError("The value needs to be between -90 degrees and 90 degrees");
         } else {
-            binding.editTitleLayout.setError(null);
+            binding.editLatitudeLayout.setError(null);
         }
 
-        if (Double.parseDouble(subTitleText) > 180 || Double.parseDouble(subTitleText) < -180) {
-            binding.editSubtitleLayout.setError("The value needs to be between -180 degrees and 180 degrees");
+        if (Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180) {
+            binding.editLongitudeLayout.setError("The value needs to be between -180 degrees and 180 degrees");
         } else {
-            binding.editSubtitleLayout.setError(null);
+            binding.editLongitudeLayout.setError(null);
         }
     }
 

@@ -28,13 +28,12 @@ public class FirstFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
-        List<Location> noteModelList = dataBaseHelper.getEveryone();
-        System.out.println(noteModelList.toString());
+        List<Location> locationList = dataBaseHelper.getEveryone();
 
-        ArrayAdapter<Location> noteArrayAdapter = new ArrayAdapter<Location>(getContext(), android.R.layout.simple_list_item_1, noteModelList);
+        ArrayAdapter<Location> locationArrayAdapter = new ArrayAdapter<Location>(getContext(), android.R.layout.simple_list_item_1, locationList);
         viewModel = new ViewModelProvider(getActivity()).get(SharedLocationViewModel.class);
         binding = FragmentFirstBinding.inflate(inflater, container, false);
-        CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getContext(), noteModelList);
+        CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getContext(), locationList);
         binding.listview.setAdapter(customBaseAdapter);
         binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -57,8 +56,8 @@ public class FirstFragment extends Fragment {
                         .navigate(R.id.action_FirstFragment_to_SecondFragment);
 
                 // TODO: Send data to SecondFragment
-                Location selectedNote = noteArrayAdapter.getItem(position);
-                viewModel.setData(selectedNote);
+                Location selectedLocation = locationArrayAdapter.getItem(position);
+                viewModel.setData(selectedLocation);
             }
         });
         return binding.getRoot();

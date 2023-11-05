@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_title_layout"
+            android:id="@+id/edit_latitude_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -19,20 +19,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
-                android:id="@+id/edit_title"
+                android:id="@+id/edit_latitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edit_subtitle_layout"
+            android:id="@+id/edit_longitude_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Longitude (-180 degrees to 180 degrees)"
-            app:layout_constraintTop_toBottomOf="@+id/edit_title_layout">
+            app:layout_constraintTop_toBottomOf="@+id/edit_latitude_layout">
 
             <EditText
-                android:id="@+id/edit_subtitle"
+                android:id="@+id/edit_longitude"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -49,7 +49,7 @@
             android:padding="7dp"
             android:src="@drawable/baseline_delete_24"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_subtitle_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_longitude_layout" />
 
         <ImageButton
             android:id="@+id/submitButton"
@@ -62,7 +62,7 @@
             android:padding="7dp"
             android:src="@drawable/baseline_check_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_subtitle_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_longitude_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

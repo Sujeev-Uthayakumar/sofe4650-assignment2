@@ -45,12 +45,12 @@ public class CustomBaseAdapter extends BaseAdapter implements Filterable {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.activity_custom_list_view, null);
-        TextView titleView = (TextView) view.findViewById(R.id.list_title);
-        titleView.setText(locationList.get(i).getAddress());
-        TextView subtitleView = (TextView) view.findViewById(R.id.list_subtitle);
-        subtitleView.setText(locationList.get(i).getLongitude());
-        TextView noteView = (TextView) view.findViewById(R.id.list_note);
-        noteView.setText(locationList.get(i).getLatitude());
+        TextView address = (TextView) view.findViewById(R.id.list_address);
+        address.setText(locationList.get(i).getAddress());
+        TextView latitude = (TextView) view.findViewById(R.id.list_latitude);
+        latitude.setText("Latitude: " + locationList.get(i).getLatitude());
+        TextView longitude = (TextView) view.findViewById(R.id.list_longitude);
+        longitude.setText("Longitude: " + locationList.get(i).getLongitude());
         return view;
     }
 
