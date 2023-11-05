@@ -1,5 +1,6 @@
 package com.sujeevuthayakumar.sofe4650_assignment2;
 
+// The Location model with the id, address, latitude, and longitude
 public class Location {
 
     private int id;

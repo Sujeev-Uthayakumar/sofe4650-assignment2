@@ -15,6 +15,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.sujeevuthayakumar.sofe4650_assignment2.databinding.FragmentSecondBinding;
 
+// The page that focuses on being able to add and edit coordinates
 public class SecondFragment extends Fragment {
 
     private FragmentSecondBinding binding;
@@ -30,8 +31,10 @@ public class SecondFragment extends Fragment {
 
         binding = FragmentSecondBinding.inflate(inflater, container, false);
 
+        // Used to transfer data between fragments
         viewModel = new ViewModelProvider(getActivity()).get(SharedLocationViewModel.class);
         viewModel.getData().observe(getViewLifecycleOwner(), data -> {
+            // If the data is not null, set the properties on the editText components
             if (data != null) {
                 this.location = data;
                 binding.editLatitude.setText(data.getLatitude());
@@ -44,45 +47,58 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // The onClickListener for when the submit button is pressed
         binding.submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // If the inputs are valid then begin making sure which database method to use
                 if (!areInputsValid(view)) {
+                    // Get the input values for the EditText fields
                     String latitude = binding.editLatitude.getText().toString();
                     String longitude = binding.editLongitude.getText().toString();
+                    // Setup the Database to make operations
                     DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
+                    // If the location model already is set, then it is an update operation
                     if (location != null) {
+                        // Update the database with the updated data
                         Location updatedLocationModel;
                         updatedLocationModel = new Location(location.getId(), latitude, longitude);
                         dataBaseHelper.updateOne(updatedLocationModel);
                         Toast.makeText(getContext(), "Location Successfully Updated", Toast.LENGTH_SHORT).show();
                     } else {
+                        // Add to the database with the new location model
                         Location location;
                         try {
                             location = new Location(latitude, longitude);
                         } catch (Exception e) {
                             location = new Location(-1, "error", "error", "error");
                         }
-
+                        // Insert with in the database with the new data
                         boolean success = dataBaseHelper.addOne(location);
                         System.out.printf(location.toString());
                         Toast.makeText(getContext(), "Location Successfully Added", Toast.LENGTH_SHORT).show();
                     }
-
+                    // After completing the operation, return back to the First Fragment
                     NavHostFragment.findNavController(SecondFragment.this)
                             .navigate(R.id.action_SecondFragment_to_FirstFragment);
 
                 }
+                // Style the inputs with the necessary errors
                 styleErrorInputs(view);
             }
         });
 
+        // The onClickListener for the delete button when pressed
         binding.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Setup the Database to make operations
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
+                // If the location model already is set, then it is an update operation
                 if (location != null) {
+                    // Delete operation for only when there is an already existent location model
                     dataBaseHelper.deleteOne(location.getId());
+                    // After completing the operation, return back to the First Fragment
                     NavHostFragment.findNavController(SecondFragment.this)
                             .navigate(R.id.action_SecondFragment_to_FirstFragment);
                     Toast.makeText(getContext(), "Location Successfully Deleted", Toast.LENGTH_SHORT).show();
@@ -93,20 +109,25 @@ public class SecondFragment extends Fragment {
         });
     }
 
+    // Check whether the input fields are valid
     private boolean areInputsValid(View view) {
         String latitude = binding.editLatitude.getText().toString();
         String longitude = binding.editLongitude.getText().toString();
         boolean validLongitude = true;
         boolean validLatitude = true;
+        // If the latitude is within bounds
         if (latitude != null && !latitude.isEmpty()) {
             validLatitude = Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90;
         }
+        // If the longitude is within bounds
         if (longitude != null && !longitude.isEmpty()) {
             validLongitude = Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180;
         }
+        // Boolean expression to determine if fields are valid
         return latitude.isEmpty() || longitude.isEmpty() || validLatitude || validLongitude;
     }
 
+    // Style the input fields with errors if inputs are invalid
     private void styleErrorInputs(View view) {
         // Get the values of inputs
         String latitude = binding.editLatitude.getText().toString();
@@ -144,6 +165,7 @@ public class SecondFragment extends Fragment {
             binding.editLatitudeLayout.setError(null);
         }
 
+        // If the latitude is within bounds
         if (latitude != null && !latitude.isEmpty()) {
             if (Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90) {
                 binding.editLatitudeLayout.setError("The value needs to be between -90 degrees and 90 degrees");
@@ -152,6 +174,7 @@ public class SecondFragment extends Fragment {
             }
         }
 
+        // If the longitude is within bounds
         if (longitude != null && !longitude.isEmpty()) {
             if (Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180) {
                 binding.editLongitudeLayout.setError("The value needs to be between -180 degrees and 180 degrees");

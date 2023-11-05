@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+// The database helper that setups and makes operations to the database
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     public static final String COLUMN_LOCATION = "LOCATION";
@@ -28,11 +29,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_LOCATION_LONGITUDE = COLUMN_LOCATION + "_LONGITUDE";
     private Context context;
 
+    // Setup the database with the context
     public DataBaseHelper(@Nullable Context context) {
         super(context, "location.db", null, 1);
         this.context = context;
     }
 
+    // Create a database table with 4 columns id, address, latitude and longitude
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         String createTableStatement = "CREATE TABLE " + LOCATION_TABLE
@@ -50,9 +53,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    // Add one row to the table
     public boolean addOne(Location location) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
+        // Convert the coordinates to an address
         location.setAddress(getAddress(location.getLatitude(), location.getLongitude()));
 
         cv.put(COLUMN_LOCATION_ADDRESS, location.getAddress());
@@ -65,9 +71,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return insert != -1;
     }
 
+    // Update one row to the table
     public boolean updateOne(Location location) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
+
+        // Convert the coordinates to an address
         location.setAddress(getAddress(location.getLatitude(), location.getLongitude()));
 
         cv.put(COLUMN_LOCATION_ADDRESS, location.getAddress());
@@ -78,16 +87,18 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return update != -1;
     }
 
+    // Delete one row to the table based on id
     public boolean deleteOne(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int delete = db.delete(LOCATION_TABLE, "id=?", new String[]{Integer.toString(id)});
         return delete != -1;
     }
 
+    // List all the rows in the table
     public List<Location> getEveryone() {
         List<Location> returnList = new ArrayList<>();
 
-        // get data from the database
+        // Get data from the database
 
         String queryString = "SELECT * FROM " + LOCATION_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -113,6 +124,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    // Generate the mock data from the csv and store in the database
     private List<Location> getMockDataFromCSV() {
         List<Location> locationList = new ArrayList<>();
         InputStream is = context.getResources().openRawResource(R.raw.locations);
@@ -148,6 +160,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return locationList;
     }
 
+    // Add mock data to the table using the SQLiteDatabase connection on the onCreate
     private void addMockData(SQLiteDatabase db) {
         List<Location> mockLocations = getMockDataFromCSV();
         for (Location location : mockLocations) {
@@ -159,6 +172,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Convert the coordinates from latitude and longitude to an address
     private String getAddress(String latitude, String longitude){
         String address = "";
 

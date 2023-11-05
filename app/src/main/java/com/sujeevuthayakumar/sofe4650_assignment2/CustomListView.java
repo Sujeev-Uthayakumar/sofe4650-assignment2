@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+/**
+ * CustomListView is an activity class that extends AppCompatActivity.
+ * It is used to display a custom list view layout defined in the XML layout resource.
+ */
 public class CustomListView extends AppCompatActivity {
 
     @Override

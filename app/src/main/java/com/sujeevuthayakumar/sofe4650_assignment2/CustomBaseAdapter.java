@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+// Used to populate the list with data from the adapter
 public class CustomBaseAdapter extends BaseAdapter implements Filterable {
 
     Context context;
@@ -27,21 +28,25 @@ public class CustomBaseAdapter extends BaseAdapter implements Filterable {
         this.dataBaseHelper = new DataBaseHelper(context);
     }
 
+    // Count the number of items in the location array
     @Override
     public int getCount() {
         return locationList.size();
     }
 
+    // Get a specific item based on an index
     @Override
     public Object getItem(int i) {
         return locationList.get(i);
     }
 
+    // Get an item id by an index
     @Override
     public long getItemId(int i) {
         return locationList.get(i).getId();
     }
 
+    // Set the data on a list component based on index
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflater.inflate(R.layout.activity_custom_list_view, null);
@@ -54,30 +59,35 @@ public class CustomBaseAdapter extends BaseAdapter implements Filterable {
         return view;
     }
 
+
+    // Used to filter the adapter base don a string sequence
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
 
             @SuppressWarnings("unchecked")
             @Override
-            protected void publishResults(CharSequence constraint,FilterResults results) {
+            protected void publishResults(CharSequence constraint, FilterResults results) {
 
                 locationList = (List<Location>) results.values; // has the filtered values
                 notifyDataSetChanged();  // notifies the data with new filtered values
             }
 
+            // The logic used to filter the adapter data
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                // Holds the results of a filtering operation in values
+                FilterResults results = new FilterResults();
                 List<Location> FilteredArrList = new ArrayList<Location>();
 
                 if (originalLocationList == null) {
-                    originalLocationList = new ArrayList<Location>(locationList); // saves the original data in mOriginalValues
+                    // Saves the original data in originalLocationList
+                    originalLocationList = new ArrayList<Location>(locationList);
                 }
 
                 if (constraint == null || constraint.length() == 0) {
 
-                    // set the Original result to return
+                    // Set the Original result to return
                     results.count = originalLocationList.size();
                     results.values = originalLocationList;
                 }
@@ -89,7 +99,7 @@ public class CustomBaseAdapter extends BaseAdapter implements Filterable {
                             FilteredArrList.add(data);
                         }
                     }
-                    // set the Filtered result to return
+                    // Set the Filtered result to return
                     results.count = FilteredArrList.size();
                     results.values = FilteredArrList;
                 }

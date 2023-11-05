@@ -19,6 +19,7 @@ import com.sujeevuthayakumar.sofe4650_assignment2.databinding.ActivityMainBindin
 import android.view.Menu;
 import android.view.MenuItem;
 
+// The main activity that sets up the navigation
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
@@ -31,8 +32,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Sets the toolbar as the action bar
         setSupportActionBar(binding.toolbar);
 
+        // Sets the navigation for the MainActivity
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
