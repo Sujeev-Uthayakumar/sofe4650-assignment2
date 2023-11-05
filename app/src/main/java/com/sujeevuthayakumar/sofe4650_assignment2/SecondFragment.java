@@ -96,8 +96,14 @@ public class SecondFragment extends Fragment {
     private boolean areInputsValid(View view) {
         String latitude = binding.editLatitude.getText().toString();
         String longitude = binding.editLongitude.getText().toString();
-        boolean validLatitude = Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90;
-        boolean validLongitude = Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180;
+        boolean validLongitude = true;
+        boolean validLatitude = true;
+        if (latitude != null && !latitude.isEmpty()) {
+            validLatitude = Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90;
+        }
+        if (longitude != null && !longitude.isEmpty()) {
+            validLongitude = Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180;
+        }
         return latitude.isEmpty() || longitude.isEmpty() || validLatitude || validLongitude;
     }
 
@@ -129,7 +135,7 @@ public class SecondFragment extends Fragment {
         // The list of colors used for the state
         ColorStateList myColorList = new ColorStateList(states, colors);
 
-        // Check for principal amount input
+        // Check for inputs
         if (latitude.isEmpty()) {
             binding.editLatitudeLayout.setError("Required");
         } else if (longitude.isEmpty()) {
@@ -138,16 +144,20 @@ public class SecondFragment extends Fragment {
             binding.editLatitudeLayout.setError(null);
         }
 
-        if (Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90) {
-            binding.editLatitudeLayout.setError("The value needs to be between -90 degrees and 90 degrees");
-        } else {
-            binding.editLatitudeLayout.setError(null);
+        if (latitude != null && !latitude.isEmpty()) {
+            if (Double.parseDouble(latitude) > 90 || Double.parseDouble(latitude) < -90) {
+                binding.editLatitudeLayout.setError("The value needs to be between -90 degrees and 90 degrees");
+            } else {
+                binding.editLatitudeLayout.setError(null);
+            }
         }
 
-        if (Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180) {
-            binding.editLongitudeLayout.setError("The value needs to be between -180 degrees and 180 degrees");
-        } else {
-            binding.editLongitudeLayout.setError(null);
+        if (longitude != null && !longitude.isEmpty()) {
+            if (Double.parseDouble(longitude) > 180 || Double.parseDouble(longitude) < -180) {
+                binding.editLongitudeLayout.setError("The value needs to be between -180 degrees and 180 degrees");
+            } else {
+                binding.editLongitudeLayout.setError(null);
+            }
         }
     }
 
